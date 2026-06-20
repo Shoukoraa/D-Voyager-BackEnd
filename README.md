@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="D-Voyager-noBG-Transparent.png" alt="D-Voyager Logo" width="250"/>
+</p>
+
 # 🗺️ D-Voyager Backend
 
 D-Voyager Backend adalah RESTful API dan Admin Control Panel berbasis **Laravel** untuk platform layanan pemesanan travel & shuttle (D-Voyager). Sistem ini mencakup manajemen pemesanan (booking), manifest penumpang, pelacakan GPS armada secara real-time, integrasi sistem pembayaran, voucher diskon, chatbot bantuan, dan live chat dukungan pelanggan.
