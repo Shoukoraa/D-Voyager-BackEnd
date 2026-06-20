@@ -1,58 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🗺️ D-Voyager Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+D-Voyager Backend adalah RESTful API dan Admin Control Panel berbasis **Laravel** untuk platform layanan pemesanan travel & shuttle (D-Voyager). Sistem ini mencakup manajemen pemesanan (booking), manifest penumpang, pelacakan GPS armada secara real-time, integrasi sistem pembayaran, voucher diskon, chatbot bantuan, dan live chat dukungan pelanggan.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **🔐 Autentikasi Keamanan & Sosial**:
+  - Registrasi & Login (Pelanggan, Supir, Admin).
+  - Verifikasi OTP via email.
+  - Integrasi **Google OAuth** (Google Sign-In).
+  - Manajemen Profil & Foto Profil.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **📅 Manajemen Perjalanan & Pemesanan (Customer)**:
+  - Pencarian lokasi halte asal/tujuan serta jadwal perjalanan aktif.
+  - Pemilihan kursi secara interaktif.
+  - Booking & Pembayaran otomatis terintegrasi dengan webhook pihak ketiga (DompetX).
+  - Riwayat perjalanan dan penilaian (review) terhadap supir & layanan.
 
-## Learning Laravel
+- **🚚 Sistem Supir (Driver)**:
+  - Melihat daftar tugas jadwal supir secara personal.
+  - Informasi Manifest Penumpang yang akurat.
+  - Pelacakan GPS Real-time: update lokasi berkala supir yang disinkronkan langsung ke peta admin.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **🛠️ Panel Kontrol Admin (Web Admin Portal)**:
+  - Dashboard statistik interaktif.
+  - Manajemen CRUD lengkap: Lokasi (Halte), Rute, Armada (Kendaraan), Supir, Pelanggan, Jadwal, Voucher Promosi, dan Data Pemesanan.
+  - Fitur Ekspor Laporan bulanan dalam format **PDF** dan **Excel**.
+  - Peta Pemantauan GPS Armada (menggunakan **Mapbox**).
+  - Live Support Chat: Admin membalas obrolan langsung dari pelanggan secara real-time.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **💬 Pusat Bantuan Cerdas (Chatbot & CS Live Chat)**:
+  - Layanan bantuan chatbot interaktif dengan pembagian kategori masalah.
+  - Eskalasi otomatis ke Live Chat Admin jika masalah belum teratasi.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **⚡ Real-time Engine**:
+  - Menggunakan **Laravel Reverb** (WebSockets) untuk sinkronisasi peta pelacakan GPS supir, status booking, dan chatting real-time.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🛠️ Tech Stack & Dependencies
 
+- **Framework:** Laravel v13.x
+- **Bahasa Pemrograman:** PHP v8.3+
+- **Database:** MySQL
+- **Real-time Server:** Laravel Reverb (WebSockets)
+- **Library Kunci:**
+  - `barryvdh/laravel-dompdf` (Generasi Laporan PDF)
+  - `excel` / `maatwebsite/excel` (Generasi Laporan Excel)
+  - `laravel/socialite` (Google OAuth)
+  - `laravel/sanctum` (API Token Authentication)
+
+---
+
+## 💻 Panduan Instalasi Lokal
+
+Ikuti langkah-langkah di bawah ini untuk menjalankan project di lokal server Anda:
+
+### 1. Kloning Repository & Install Dependensi
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/Shoukoraa/D-Voyager-BackEnd.git
+cd D-Voyager-BackEnd
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Setup Environment (`.env`)
+Salin file konfigurasi `.env.example` ke `.env`:
+```bash
+cp .env.example .env
+```
+Sesuaikan konfigurasi database, SMTP email, Mapbox Token, Google Client API, dan Laravel Reverb pada file `.env`.
 
-## Contributing
+### 3. Setup Project (Otomatis)
+Project ini dilengkapi dengan perintah setup otomatis yang akan menginstal dependensi PHP & JS, generate application key, menjalankan migrasi database, dan build aset:
+```bash
+composer run setup
+```
+*Atau, Anda bisa menjalankan secara manual:*
+```bash
+composer install
+php artisan key:generate
+php artisan migrate --seed
+npm install
+npm run build
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Menjalankan Server Lokal
+Untuk menjalankan server lokal, antrean queue (untuk email/proses background), dan server WebSocket (Laravel Reverb) secara bersamaan, jalankan perintah:
+```bash
+composer run dev
+```
+Perintah di atas akan secara otomatis menjalankan:
+- PHP Development Server (`http://localhost:8000`)
+- Laravel Queue Listener (`queue:listen`)
+- Laravel Reverb (WebSocket) Server (`127.0.0.1:8080`)
+- Vite Asset Compilation
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📡 Dokumentasi Endpoint API
+Untuk mempermudah integrasi frontend (D-Voyager FrontEnd), project ini dilengkapi dengan koleksi API:
+- **Postman Collection:** [Dominic.postman.json](file:///C:/laragon/www/D-Voyager-BackEnd/Dominic.postman.json)
+- **OpenAPI Schema:** [shuttle-openapi.json](file:///C:/laragon/www/D-Voyager-BackEnd/shuttle-openapi.json)
