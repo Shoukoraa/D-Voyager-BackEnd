@@ -301,7 +301,7 @@
 
                     <!-- Mockup Download Badges & Mobile Notification -->
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-4">
-                        <a href="#" class="flex items-center gap-3 bg-dark-900 text-white px-5 py-3 rounded-xl hover:bg-dark-850 hover:border-brand-500 border border-transparent transition-all hover:-translate-y-0.5 shadow-md">
+                        <a href="https://play.google.com/store/apps/details?id=com.dvoyager.app" class="flex items-center gap-3 bg-dark-900 text-white px-5 py-3 rounded-xl hover:bg-dark-850 hover:border-brand-500 border border-transparent transition-all hover:-translate-y-0.5 shadow-md">
                             <svg class="w-6 h-6 text-brand-500" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M5 3.00005C4.82915 2.99982 4.66016 3.03713 4.5057 3.10915C4.35123 3.18118 4.21503 3.28616 4.10729 3.41625L13.6823 13.0001L20.4073 6.27505C19.9882 5.23439 19.1172 4.41724 18.0263 4.04505L5.73629 3.0563C5.49229 3.0188 5.24436 2.99984 5 3.00005ZM3.18 4.7088C3.06173 4.96582 3.00056 5.24523 3 5.52755V18.4726C3.00049 18.755 3.06161 19.0345 3.17983 19.2917L12.2687 13.0001L3.18 4.7088ZM13.6823 13.0001L4.10729 22.5838C4.26947 22.7801 4.48208 22.9298 4.72528 23.0189C4.96847 23.108 5.2323 23.1328 5.49051 23.0909L18.0263 20.9538C19.1172 20.5816 19.9882 19.7645 20.4073 18.7238L13.6823 13.0001Z"/>
                             </svg>
