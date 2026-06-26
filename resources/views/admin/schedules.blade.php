@@ -193,8 +193,15 @@
                                         <td class="px-5 py-4 text-center whitespace-nowrap">
                                             <input form="bulkDeleteForm" type="checkbox" name="schedule_ids[]" value="{{ $s->id }}" class="schedule-checkbox rounded text-brand-500 focus:ring-brand-500 h-4 w-4 border-gray-300">
                                         </td>
-                                        <td class="px-4 py-4 whitespace-nowrap text-center font-bold text-gray-400">
-                                            {{ $s->id }}
+                                        <td class="px-4 py-4 whitespace-nowrap text-center">
+                                            <div class="flex flex-col items-center justify-center gap-1">
+                                                <span class="font-bold text-gray-400">{{ $s->id }}</span>
+                                                @if($s->is_master)
+                                                    <span class="px-1.5 py-0.5 text-[9px] uppercase font-black bg-brand-500 text-dark-900 rounded shadow-sm border border-brand-600/20">MASTER</span>
+                                                @else
+                                                    <span class="px-1.5 py-0.5 text-[9px] uppercase font-black bg-gray-100 text-gray-400 rounded border border-gray-200">OTOMATIS</span>
+                                                @endif
+                                            </div>
                                         </td>
                                         <td class="px-5 py-4 font-semibold text-dark-900 whitespace-nowrap">
                                             <div class="flex items-center gap-1.5">

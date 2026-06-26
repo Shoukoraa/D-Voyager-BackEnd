@@ -344,6 +344,7 @@ class AdminWebController extends Controller
     // SCHEDULES
     public function schedules() {
         $schedules = Schedule::with(['route.origin', 'route.destination', 'vehicle', 'driver.user'])
+            ->orderByDesc('is_master')
             ->orderByDesc('departure_time')
             ->paginate(15)
             ->withQueryString();
@@ -355,6 +356,7 @@ class AdminWebController extends Controller
     public function storeSchedule(Request $request) {
         $validated = $request->validate(['route_id' => 'required|exists:routes,id', 'vehicle_id' => 'required|exists:vehicles,id', 'driver_id' => 'required|exists:drivers,id', 'departure_time' => 'required|date', 'arrival_time' => 'required|date|after:departure_time', 'capacity' => 'required|integer|min:1', 'price' => 'required|numeric|min:0']);
         $validated['status'] = 'scheduled';
+        $validated['is_master'] = true;
 
         DB::transaction(function () use ($validated) {
             $schedule = Schedule::create($validated);
@@ -375,7 +377,21 @@ class AdminWebController extends Controller
     public function editSchedule(Schedule $schedule) { return view('admin.schedules_edit', ['schedule' => $schedule, 'routes' => RouteModel::with(['origin', 'destination'])->get(), 'vehicles' => Vehicle::all(), 'drivers' => Driver::with('user')->get()]); }
     public function updateSchedule(Request $request, Schedule $schedule) {
         $validated = $request->validate(['route_id' => 'required|exists:routes,id', 'vehicle_id' => 'required|exists:vehicles,id', 'driver_id' => 'required|exists:drivers,id', 'departure_time' => 'required|date', 'arrival_time' => 'required|date|after:departure_time', 'capacity' => 'required|integer|min:1', 'price' => 'required|numeric|min:0', 'status' => 'required|string']);
+        
+        $oldPrice = $schedule->price;
         $schedule->update($validated);
+
+        if ($schedule->is_master && $oldPrice != $validated['price']) {
+            $timeOnly = \Carbon\Carbon::parse($schedule->departure_time)->format('H:i:s');
+            
+            \App\Models\Schedule::where('is_master', false)
+                ->where('route_id', $schedule->route_id)
+                ->where('vehicle_id', $schedule->vehicle_id)
+                ->whereTime('departure_time', $timeOnly)
+                ->where('departure_time', '>', now())
+                ->update(['price' => $validated['price']]);
+        }
+
         return redirect()->route('admin.schedules')->with('success', 'Jadwal berhasil diperbarui!');
     }
     public function deleteSchedule(Schedule $schedule) {

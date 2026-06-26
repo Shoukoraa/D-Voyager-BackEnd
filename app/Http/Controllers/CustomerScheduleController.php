@@ -37,6 +37,10 @@ class CustomerScheduleController extends Controller
             if ($route) {
                 // 2. Ambil "Jadwal Master" dari jadwal-jadwal yang pernah dibuat untuk rute ini
                 $existingSchedules = Schedule::where('route_id', $route->id)
+                    ->where('is_master', true)
+                    ->whereHas('driver', function($q) {
+                        $q->where('status', 'active');
+                    })
                     ->select(['departure_time', 'arrival_time', 'vehicle_id', 'driver_id', 'capacity', 'price'])
                     ->get();
                 $templates = [];
@@ -78,7 +82,8 @@ class CustomerScheduleController extends Controller
                             'capacity' => $template['capacity'],
                             'price' => $template['price'],
                             'arrival_time' => $arrival_datetime,
-                            'status' => 'scheduled'
+                            'status' => 'scheduled',
+                            'is_master' => false
                         ]
                     );
 
@@ -102,7 +107,10 @@ class CustomerScheduleController extends Controller
         }
         // ==============================================
 
-        $query = Schedule::with(['route.origin', 'route.destination', 'vehicle', 'driver.user']);
+        $query = Schedule::with(['route.origin', 'route.destination', 'vehicle', 'driver.user'])
+            ->whereHas('driver', function($q) {
+                $q->where('status', 'active');
+            });
 
         if ($request->has('route_id')) {
             $query->where('route_id', $request->route_id);

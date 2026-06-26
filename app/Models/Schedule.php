@@ -19,7 +19,8 @@ class Schedule extends Model
         'end_time',
         'capacity',
         'status',
-        'price'
+        'price',
+        'is_master'
     ];
 
     public function route()
