@@ -31,6 +31,11 @@ class DriverCustomerMessageSent implements ShouldBroadcastNow
         ];
     }
 
+    public function broadcastAs(): string
+    {
+        return 'driver.customer.message.sent';
+    }
+
     /**
      * Get the data to broadcast.
      *
