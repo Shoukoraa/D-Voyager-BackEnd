@@ -19,8 +19,14 @@ class SessionStatusChanged implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('admin.chat')
+            new PrivateChannel('admin.chat'),
+            new PrivateChannel("chat.{$this->session->id}")
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'session.status.changed';
     }
 
     public function broadcastWith(): array

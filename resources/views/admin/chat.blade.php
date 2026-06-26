@@ -136,7 +136,7 @@
         });
 
         adminEcho.private('admin.chat')
-            .listen('SessionStatusChanged', () => { refreshAdminQueue(); });
+            .listen('.session.status.changed', () => { refreshAdminQueue(); });
 
         refreshAdminQueue();
     }
@@ -242,13 +242,13 @@
             });
 
         adminEcho.private(`chat.${session.id}`)
-            .listen('MessageSent', e => {
+            .listen('.message.sent', e => {
                 if (e.sender_type === 'user') {
                     appendAdminBoxUserMsg(e.message_content);
                     scrollAdminChat();
                 }
             })
-            .listen('SessionStatusChanged', e => {
+            .listen('.session.status.changed', e => {
                 if (e.status === 'resolved') {
                     appendAdminSystemMsg('Sesi ini telah diselesaikan.');
                     activeAdminSessionId = null;

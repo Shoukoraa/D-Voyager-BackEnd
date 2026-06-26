@@ -23,6 +23,11 @@ class MessageSent implements ShouldBroadcastNow
         ];
     }
 
+    public function broadcastAs(): string
+    {
+        return 'message.sent';
+    }
+
     public function broadcastWith(): array
     {
         return [
